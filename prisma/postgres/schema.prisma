@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  email             String   @unique
+  firstname         String   @db.VarChar(30)
+  lastname          String   @db.VarChar(30)
+  password          String
+  rppsCode          String   @unique @db.VarChar(11)
+  profilePictureUrl String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  settings      Setting[]
+  roles         Role[]         @relation("UserHasRole")
+  conversations Conversation[] @relation("UserHasConversation")
+  teams         Team[]         @relation("UserHasTeam")
+  specialities  Speciality[]   @relation("UserHasSpeciality")
+  patients      Patient[]      @relation("UserHasPatient")
+  ownedTeams    Team[]         @relation("TeamOwner")
+}
+
+model Setting {
+  id           Int    @id @default(autoincrement())
+  userId       Int
+  settingKeyId Int
+  value        String
+
+  user       User       @relation(fields: [userId], references: [id])
+  settingKey SettingKey @relation(fields: [settingKeyId], references: [id])
+
+  @@unique([userId, settingKeyId])
+}
+
+model SettingKey {
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  defaultValue String
+
+  settings Setting[]
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  users User[] @relation("UserHasRole")
+}
+
+model Speciality {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  users User[] @relation("UserHasSpeciality")
+}
+
+model Team {
+  id                Int      @id @default(autoincrement())
+  ownerId           Int
+  name              String   @unique @db.VarChar(50)
+  color             String   @db.VarChar(7)
+  profilePictureUrl String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  owner User   @relation("TeamOwner", fields: [ownerId], references: [id])
+  users User[] @relation("UserHasTeam")
+}
+
+model Conversation {
+  id    Int    @id @default(autoincrement())
+  users User[] @relation("UserHasConversation")
+}
+
+model Patient {
+  id                   Int      @id @default(autoincrement())
+  zipCodeId            Int
+  firstname            String   @db.VarChar(30)
+  lastname             String   @db.VarChar(30)
+  birthdate            DateTime
+  socialSecurityNumber String   @unique @db.VarChar(15)
+  phoneNumber          String   @db.VarChar(10)
+  email                String   @unique @db.VarChar(50)
+  address              String   @db.VarChar(140)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  zipCode  ZipCode   @relation(fields: [zipCodeId], references: [id])
+  channels Channel[]
+  users    User[]    @relation("UserHasPatient")
+}
+
+model ZipCode {
+  id     Int    @id @default(autoincrement())
+  code   String @unique @db.VarChar(5)
+  cityId Int
+
+  city   City      @relation(fields: [cityId], references: [id])
+  Patient Patient[]
+}
+
+model City {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(60)
+
+  zipCodes ZipCode[]
+}
+
+model Channel {
+  id            Int @id @default(autoincrement())
+  patientId     Int
+  channelTypeId Int
+
+  patient     Patient     @relation(fields: [patientId], references: [id])
+  channelType ChannelType @relation(fields: [channelTypeId], references: [id])
+
+  @@unique([patientId, channelTypeId])
+}
+
+model ChannelType {
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(30)
+  color String @db.VarChar(7)
+  order Float
+
+  channel Channel[]
+}

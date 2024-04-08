@@ -1,0 +1,243 @@
+{
+  "users": [
+    {
+      "email": "alice@smith.com",
+      "firstname": "Alice",
+      "lastname": "Smith",
+      "password": "Password123!",
+      "rppsCode": "12345678901",
+      "profilePictureUrl": "https://example.com/image1.jpg",
+      "roles": ["Administrator", "Manager"],
+      "specialities": ["Cardiology"]
+    },
+    {
+      "email": "bob@brown.com",
+      "firstname": "Bob",
+      "lastname": "Brown",
+      "password": "Password123!",
+      "rppsCode": "12345678902",
+      "profilePictureUrl": "https://example.com/image2.jpg",
+      "roles": ["Viewer", "User"],
+      "specialities": ["Neurology"]
+    },
+    {
+      "email": "charlie@davis.com",
+      "firstname": "Charlie",
+      "lastname": "Davis",
+      "password": "Password123!",
+      "rppsCode": "12345678903",
+      "profilePictureUrl": "https://example.com/image3.jpg",
+      "roles": ["Manager", "Editor", "User"],
+      "specialities": ["Pediatrics"]
+    },
+    {
+      "email": "david@evans.com",
+      "firstname": "David",
+      "lastname": "Evans",
+      "password": "Password123!",
+      "rppsCode": "12345678904",
+      "profilePictureUrl": "https://example.com/image4.jpg",
+      "roles": ["Guest"],
+      "specialities": ["Orthopedics"]
+    },
+    {
+      "email": "eva@fox.com",
+      "firstname": "Eva",
+      "lastname": "Fox",
+      "password": "Password123!",
+      "rppsCode": "12345678905",
+      "profilePictureUrl": "https://example.com/image5.jpg",
+      "roles": ["Administrator", "Editor", "User"],
+      "specialities": ["Oncology"]
+    }
+  ],
+  "teams": [
+    {
+      "ownerEmail": "alice@smith.com",
+      "usersEmail": ["alice@smith.com", "charlie@davis.com"],
+      "name": "Manager Team",
+      "color": "#f6f8fa"
+    },
+    {
+      "ownerEmail": "charlie@davis.com",
+      "usersEmail": ["charlie@davis.com", "bob@brown.com"],
+      "name": "Afterwork",
+      "color": "#f03a17"
+    },
+    {
+      "ownerEmail": "eva@fox.com",
+      "usersEmail": [
+        "eva@fox.com",
+        "charlie@davis.com",
+        "alice@smith.com",
+        "bob@brown.com"
+      ],
+      "name": "Pole 1",
+      "color": "#f6f8fa"
+    },
+    {
+      "ownerEmail": "david@evans.com",
+      "usersEmail": [
+        "david@evans.com",
+        "eva@fox.com",
+        "charlie@davis.com",
+        "alice@smith.com",
+        "bob@brown.com"
+      ],
+      "name": "General",
+      "color": "#37b258"
+    }
+  ],
+  "patients": [
+    {
+      "firstname": "Capitaine",
+      "lastname": "Haddock",
+      "birthdate": "1980-01-01",
+      "socialSecurityNumber": "123456789012345",
+      "phoneNumber": "0123456789",
+      "email": "capitaine@haddock.fr",
+      "address": "123 rue du port",
+      "zipCode": { "code": "13001", "cityName": "MARSEILLE 01" },
+      "channels": [
+        "Pharmacy",
+        "General",
+        "Radiology",
+        "Connection with family"
+      ],
+      "users": [
+        "alice@smith.com",
+        "bob@brown.com",
+        "charlie@davis.com",
+        "david@evans.com",
+        "eva@fox.com"
+      ]
+    },
+    {
+      "firstname": "Tintin",
+      "lastname": "Reporter",
+      "birthdate": "1985-01-01",
+      "socialSecurityNumber": "987654321012345",
+      "phoneNumber": "9876543210",
+      "email": "tintin@reporter.fr",
+      "address": "456 boulevard de Moulinsart",
+      "zipCode": { "code": "69001", "cityName": "LYON 01" },
+      "channels": ["Pharmacy", "General", "Radiology"],
+      "users": ["alice@smith.com", "bob@brown.com", "eva@fox.com"]
+    },
+    {
+      "firstname": "Emmanuel",
+      "lastname": "Macron",
+      "birthdate": "1977-12-21",
+      "socialSecurityNumber": "135790246812345",
+      "phoneNumber": "1357902468",
+      "email": "emmanuel@macron.fr",
+      "address": "55 rue du faubourg Saint-Honoré",
+      "zipCode": { "code": "75001", "cityName": "PARIS 01" },
+      "channels": ["Pharmacy", "General", "Connection with family"],
+      "users": [
+        "alice@smith.com",
+        "charlie@davis.com",
+        "david@evans.com",
+        "eva@fox.com"
+      ]
+    }
+  ],
+  "channelsTypes": [
+    {
+      "name": "Pharmacy",
+      "color": "#a742f5",
+      "order": 1
+    },
+    {
+      "name": "General",
+      "color": "#f54242",
+      "order": 2
+    },
+    {
+      "name": "Radiology",
+      "color": "#42f5a7",
+      "order": 3
+    },
+    {
+      "name": "Connection with family",
+      "color": "#f5a742",
+      "order": 4
+    }
+  ],
+  "settingsKeys": [
+    {
+      "name": "theme",
+      "defaultValue": "light"
+    },
+    {
+      "name": "language",
+      "defaultValue": "fr"
+    },
+    {
+      "name": "fontSize",
+      "defaultValue": "14"
+    }
+  ],
+  "settings": [
+    {
+      "userEmail": "alice@smith.com",
+      "settingKeyName": "FontSize",
+      "value": "10"
+    },
+    {
+      "userEmail": "alice@smith.com",
+      "settingKeyName": "FontSize",
+      "value": ""
+    }
+  ],
+  "channels": [
+    {
+      "patientEmail": "capitaine@haddock.fr",
+      "channelTypeName": "Pharmacy"
+    },
+    {
+      "patientEmail": "capitaine@haddock.fr",
+      "channelTypeName": "General"
+    },
+    {
+      "patientEmail": "capitaine@haddock.fr",
+      "channelTypeName": "Radiology"
+    },
+    {
+      "patientEmail": "capitaine@haddock.fr",
+      "channelTypeName": "Connection with family"
+    },
+    {
+      "patientEmail": "tintin@reporter.fr",
+      "channelTypeName": "Pharmacy"
+    },
+    {
+      "patientEmail": "tintin@reporter.fr",
+      "channelTypeName": "General"
+    },
+    {
+      "patientEmail": "tintin@reporter.fr",
+      "channelTypeName": "Radiology"
+    },
+    {
+      "patientEmail": "emmanuel@macron.fr",
+      "channelTypeName": "Pharmacy"
+    },
+    {
+      "patientEmail": "emmanuel@macron.fr",
+      "channelTypeName": "General"
+    },
+    {
+      "patientEmail": "emmanuel@macron.fr",
+      "channelTypeName": "Connection with family"
+    }
+  ],
+  "conversations": [
+    ["alice@smith.com", "bob@brown.com"],
+    ["alice@smith.com", "eva@fox.com"],
+    ["alice@smith.com", "charlie@davis.com"],
+    ["bob@brown.com", "charlie@davis.com"],
+    ["bob@brown.com", "eva@fox.com"],
+    ["bob@brown.com", "david@evans.com"]
+  ]
+}
