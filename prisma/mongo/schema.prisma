@@ -53,6 +53,7 @@ model attachment {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   url  String @unique
   type String @map("t")
+  filename String @map("n") @unique
 
   messageId String  @db.ObjectId
   message   Message @relation(fields: [messageId], references: [id])

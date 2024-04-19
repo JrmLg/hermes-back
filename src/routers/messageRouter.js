@@ -1,5 +1,6 @@
 import express from 'express';
 import messageController from '../controllers/messageController.js';
+import uploadAttachment from '../middlewares/uploadAttachment.js';
 
 const router = express.Router();
 
@@ -223,5 +224,13 @@ router.delete('/:messageId', messageController.deleteMessage);
  *         description: Internal server error
  */
 router.get('/:roomType(team|private|channel)/:roomId', messageController.getOneRoomWithMessages);
+
+router.post('/:messageId/attachments', uploadAttachment.single('attachment'), messageController.registerAttachments);
+
+// router.post('/:messageId/attachments', , messageController.uploadSeveralAttachments);
+
+// router.delete('/:messageId/attachments/:attachmentId', messageController.deleteOneAttachment);
+
+// router.delete('/:messageId/attachments', messageController.deleteAllAttachment);
 
 export default router;
