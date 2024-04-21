@@ -227,7 +227,7 @@ router.get('/:roomType(team|private|channel)/:roomId', messageController.getOneR
 
 router.post('/:messageId/attachments', uploadAttachment.single('attachment'), messageController.registerAttachments);
 
-// router.post('/:messageId/attachments', , messageController.uploadSeveralAttachments);
+router.post('/:messageId/severalattachments', uploadAttachment.array('attachments'), messageController.uploadSeveralAttachments);
 
 // router.delete('/:messageId/attachments/:attachmentId', messageController.deleteOneAttachment);
 

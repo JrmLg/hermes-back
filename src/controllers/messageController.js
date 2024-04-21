@@ -159,14 +159,25 @@ export default {
   },
 
   async registerAttachments(req, res, next) {
-    console.log('👆 req.file: ', req.file);
     // on récupère nos données en provenance du front
+    const { userId } = res.locals;
     const { messageId } = req.params;
     const {
       path, filename,
     } = req.file;
 
     try {
+      const message = await mongoClient.message.findFirst({
+        where: {
+          id: messageId,
+          authorId: userId,
+        },
+      });
+
+      if (!message) {
+        return res.status(404).json({ message: 'Message not found' });
+      }
+
       // Le type de fichier déduis par multer n'est pas fiable (il est déduis dedpuis l'en-tête de la requête HTTP), donc je retrouve le type du fichier à partir d'un autre module (qui lui va analyser le fichier).
       const fileType = await fileTypeFromFile(path);
 
@@ -201,7 +212,58 @@ export default {
   },
 
   async uploadSeveralAttachments(req, res, next) {
+    // on récupère nos données en provenance du front
+    const { userId } = res.locals;
+    const { messageId } = req.params;
+    // const {
+    //   path, filename,
+    // } = req.file;
 
+    console.log('👆 req.files :', req.files);
+
+    try {
+      const message = await mongoClient.message.findFirst({
+        where: {
+          id: messageId,
+          authorId: userId,
+        },
+      });
+
+      if (!message) {
+        return res.status(404).json({ message: 'Message not found' });
+      }
+
+      // // Le type de fichier déduis par multer n'est pas fiable (il est déduis dedpuis l'en-tête de la requête HTTP), donc je retrouve le type du fichier à partir d'un autre module (qui lui va analyser le fichier).
+      // const fileType = await fileTypeFromFile(path);
+
+      // // on renomme notre fichier en ajoutant l'extension
+      // const oldPath = path;
+      // const newPath = `${path}.${fileType.ext}`;
+      // rename(oldPath, newPath, (err) => {
+      //   if (err) throw err;
+      // });
+      // const filenameWithExtension = `${filename}.${fileType.ext}`;
+
+      // // on insère notre le lien vers notre PJ en bdd Mongo
+      // const mongoRecord = await mongoClient.attachment.create({
+      //   data: {
+      //     url: newPath,
+      //     type: fileType.mime,
+      //     filename: filenameWithExtension,
+      //     messageId,
+      //   },
+      // });
+      return res.status(201).json({
+        created: true,
+        ...mongoRecord,
+      });
+    } catch (error) {
+      return next({
+        status: 500,
+        message: 'Internal Server Error',
+        error,
+      });
+    }
   },
 
   async deleteOneAttachment(req, res, next) {
