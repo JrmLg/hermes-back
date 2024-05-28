@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import authRouter from './authRouter.js';
 import meRouter from './meRouter.js';
 import loginRequired from '../middlewares/loginRequired.js';
+import searchRouter from './searchRouter.js';
 import swaggerSpec from '../api-docs/swagger.js';
 
 const router = express.Router();
@@ -20,5 +21,8 @@ router.use('/auth', authRouter);
 
 // Routes me
 router.use('/me', loginRequired, meRouter);
+
+// Route search
+router.use('/search-user', searchRouter);
 
 export default router;

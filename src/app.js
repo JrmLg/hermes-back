@@ -6,6 +6,7 @@ import path from 'path';
 import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 
 // [ Local imports ]
 import apiRouter from './routers/apiRouter.js';
@@ -15,6 +16,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATIC_DIR = path.join(__dirname, '../../projet-05-hermes-front/dist');
 
 const app = express();
+
+app.use(cookieParser()); // Parse cookies
 
 app.use(express.urlencoded({ extended: true })); // Add a body parser before the router
 app.use(express.json()); // Parse JSON bodies

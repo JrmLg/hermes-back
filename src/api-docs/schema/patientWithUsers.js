@@ -1,0 +1,75 @@
+export default {
+  patientWithUsers: {
+    type: 'object',
+    required: ['firstname', 'lastname', 'birthdate', 'social_security_number', 'phone_number', 'email', 'address'],
+    properties: {
+      id: { type: 'integer', description: 'The auto-generated id for the patient.' },
+      firstname: { type: 'string', description: "Patient's firstname." },
+      lastname: { type: 'string', description: "Patient's lastname." },
+      birthdate: { type: 'string', description: "Patient's birthdate." },
+      socialSecurityNumber: { type: 'string', description: "Patient's social_security_number." },
+      phoneNumber: { type: 'string', description: "Patient's phone number." },
+      email: { type: 'string', description: "Patient's email." },
+      address: { type: 'string', description: "Patient's address." },
+      zipCodeId: { type: 'integer', description: "Patient's zip code id." },
+      createdAt: {
+        type: 'string',
+        format: 'date-time',
+        description: 'Date of creation.',
+      },
+      updatedAt: {
+        type: 'string',
+        format: 'date-time',
+        description: 'Date of last update.',
+      },
+      users: [
+        {
+          type: 'object',
+          properties: {
+            id: { type: 'integer', description: 'The auto-generated id for the user.' },
+            email: { type: 'string', description: "User's email." },
+            firstname: { type: 'string', description: "User's firstname." },
+            lastname: { type: 'string', description: "User's lastname." },
+            rppsCode: { type: 'string', description: "User's rpps code." },
+            profilePictureUrl: { type: 'string', description: "User's profile picture." },
+            createdAt: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Date of creation.',
+            },
+            updatedAt: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Date of last update.',
+            },
+          },
+        },
+      ],
+    },
+    example: {
+      id: 2,
+      firstname: 'Jane',
+      lastname: 'Doe',
+      birthdate: '01/01/1900',
+      socialSecurityNumber: '123456789012345',
+      phoneNumber: '0601020304',
+      email: 'jane@doe.com',
+      address: '5 rue de la paix',
+      zipCodeId: 2,
+      createdAt: '2024-03-10 09:43:05.757',
+      updatedAt: '2024-03-10',
+      users: [
+        {
+          id: 1,
+          email: 'bob@brown.com',
+          firstname: 'Bob',
+          lastname: 'Brown',
+          rppsCode: '12345678901',
+          profilePictureUrl: 'https://example.com/image1.jpg',
+          createdAt: '2024-03-10 09:43:05.757',
+          updatedAt: '2024-03-10 09:43:05.757',
+        },
+      ],
+    },
+  },
+};

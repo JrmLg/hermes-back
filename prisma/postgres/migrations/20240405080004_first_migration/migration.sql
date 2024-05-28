@@ -5,7 +5,7 @@ CREATE TABLE "User" (
     "firstname" VARCHAR(30) NOT NULL,
     "lastname" VARCHAR(30) NOT NULL,
     "password" TEXT NOT NULL,
-    "rppsCode" VARCHAR(11) NOT NULL,
+    "rppsCode" VARCHAR(11),
     "profilePictureUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL

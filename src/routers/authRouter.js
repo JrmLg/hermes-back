@@ -42,7 +42,14 @@ router.post('/signup', authController.signup);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/user'
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The email of the user to log in.
+ *               password:
+ *                 type: string
+ *                 description: The password of the user to log in.
  *     responses:
  *       200:
  *         description: User logged in successfully.
@@ -56,5 +63,22 @@ router.post('/signup', authController.signup);
  *         description: Not found, user not found.
  */
 router.post('/login', authController.login);
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Log out current user
+ *     tags:
+ *       - auth
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logout successful.
+ *       401:
+ *         description: Unauthorized, wrong credentials.
+ */
+router.post('/logout', authController.logout);
 
 export default router;

@@ -1,0 +1,66 @@
+// This is your Prisma schema file for MongoDB,
+// learn more about it in the docs: https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/mongodb-typescript-mongodb
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma/mongodb/client"
+}
+
+model Message {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  sourceMessageId String? @map("rAt") @db.ObjectId
+  content         String  @map("cnt")
+  deleted         Boolean @map("dlt")
+  authorId        Int     @map("aId")
+  conversationId  Int?    @map("cId")
+  teamId          Int?    @map("tId")
+  channelId       Int?    @map("chId")
+  updatedAt       DateTime? @map("uAt")
+
+  sourceMessage Message?     @relation("repliedMessage", fields: [sourceMessageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  responses     Message[]    @relation("repliedMessage")
+  attachments   attachment[]
+}
+
+model LastMessageRead {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  messageId      String @unique @map("mId") @db.ObjectId
+  readerId       Int    @map("rId")
+  channelId      Int?   @map("chId")
+  teamId         Int?   @map("tId")
+  conversationId Int?   @map("cId")
+}
+
+model Permission {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  tableName      String @map("tbl")
+  permissionName String @map("n")
+  roleId         Int?   @map("rId")
+  userId         Int?   @map("uId")
+  recordId       Int?   @map("rcId")
+}
+
+model Socket {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId   Int    @map("uId")
+  socketId String @map("sId")
+}
+
+model RefreshToken {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  token String @unique @map("tkn")
+}
+
+model attachment {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  url  String @unique
+  type String @map("t")
+
+  messageId String  @db.ObjectId
+  message   Message @relation(fields: [messageId], references: [id])
+}

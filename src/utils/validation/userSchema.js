@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const userSchema = z.object({
+export default z.object({
   email: z
     .string({
       required_error: {
@@ -87,10 +87,6 @@ const userSchema = z.object({
 
   rppsCode: z
     .string({
-      required_error: {
-        value: "The field 'rppsCode' is required.",
-        code: 'rppsCodeRequired',
-      },
       invalid_type_error: "The field 'rppsCode' must be a string.",
     })
     .length(11, {
@@ -104,10 +100,16 @@ const userSchema = z.object({
         value: "The field 'rppsCode' must contain digits only",
         code: 'rppsCodeDigits',
       },
-    }),
+    })
+    .optional(),
 
   profilePictureUrl: z
-    .string().optional(),
+    .string({
+      invalid_type_error: "The field 'profilePictureUrl' must be a string.",
+    }).url({
+      message: {
+        value: "The field 'profilePictureUrl' must be a valid url address.",
+        code: 'profilePictureUrlInvalid',
+      },
+    }).optional(),
 }).strict();
-
-export default userSchema;
