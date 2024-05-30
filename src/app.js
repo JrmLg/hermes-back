@@ -13,7 +13,7 @@ import apiRouter from './routers/apiRouter.js';
 import errorHandler from './middlewares/errorHandler.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const STATIC_DIR = path.join(__dirname, '../../projet-05-hermes-front/dist');
+const STATIC_DIR = path.join(__dirname, '../../hermes-front/dist');
 
 const app = express();
 
@@ -25,6 +25,11 @@ app.use(morgan('dev')); // Log HTTP requests
 
 app.use(express.static(STATIC_DIR)); // Serve front-end files on url '/'
 app.use('/api', apiRouter);
+
+// Restore the front-end app on any other route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(STATIC_DIR, 'index.html'));
+});
 
 app.use(errorHandler);
 
